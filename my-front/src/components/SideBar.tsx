@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
+import React from "react";
 import ProfilePicture from "./ProfilePicture";
 
 import {
@@ -44,7 +44,7 @@ const sections = [
 ];
 
 export default function SideBar() {
-  const [isOpen, setIsOpen] = useLocalStorage("sidebar_open", true);
+  const [isOpen, setIsOpen] = React.useState(true);
 
   return (
     <aside className="h-auto w-min bg-secondary border-none items-center flex flex-col text-white shadow-lg transition-all duration-300 ease-in-out">

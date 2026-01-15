@@ -1,58 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveWithExpiry } from "../utils/storage";
-import { isUserInstitutionalEmailValid } from "../domain/User/UserInstitutionalEmail";
-
-const initialState = {
-  institutional_email: "",
-  institutional_email_confirmation: "",
-};
 
 export default function Register() {
   const navigate = useNavigate();
-  const [errors, setErrors] = useState(initialState);
-  const [form, setForm] = useState(initialState);
-  const [touched, setTouched] = useState({
-    institutional_email: false,
-    institutional_email_confirmation: false,
+
+  // Estado simplificado solo para controlar los inputs
+  const [form, setForm] = useState({
+    institutional_email: "",
+    institutional_email_confirmation: "",
   });
 
-  useEffect(() => {
-    const isInstitutionalEmailValid = isUserInstitutionalEmailValid(
-      form.institutional_email
-    );
-
-    setErrors({
-      institutional_email: isInstitutionalEmailValid
-        ? ""
-        : "Correo institucional no válido.",
-      institutional_email_confirmation:
-        form.institutional_email === form.institutional_email_confirmation
-          ? ""
-          : "La confirmación del correo institucional no coincide.",
-    });
-  }, [form]);
-
-  const handleNext = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTouched({
-      institutional_email: true,
-      institutional_email_confirmation: true,
-    });
-
-    const hasErrors = Object.values(errors).some((error) => error !== "");
-    if (hasErrors) {
-      console.log("errores", errors);
-      return;
-    }
-    saveWithExpiry("registro", form, 1000 * 60 * 10); // 10 minutos
-    navigate("/recuperacion-contrasena/email-enviado");
+    // Aquí puedes redirigir a donde desees después de "enviar" el correo
+    // Por ejemplo, de vuelta al login o a una pantalla de éxito
+    alert("Si el correo es válido, recibirás instrucciones pronto.");
+    navigate("/login");
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
-        onSubmit={handleNext}
+        onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm"
       >
         <h2 className="text-2xl font-bold mb-6 text-center text-text">
@@ -69,6 +38,7 @@ export default function Register() {
         <input
           type="email"
           name="institutional_email"
+          required
           value={form.institutional_email}
           onChange={(e) =>
             setForm({ ...form, institutional_email: e.target.value })
@@ -76,9 +46,6 @@ export default function Register() {
           className="w-full border rounded-lg px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#C79316]"
           placeholder="xxxx@correo.uady.mx"
         />
-        {errors.institutional_email && touched.institutional_email && (
-          <p className="text-red-500 text-sm">{errors.institutional_email}</p>
-        )}
 
         <label className="block mb-2 text-sm font-semibold">
           Confirmación de Correo Institucional:
@@ -86,6 +53,7 @@ export default function Register() {
         <input
           type="email"
           name="institutional_email_confirmation"
+          required
           value={form.institutional_email_confirmation}
           onChange={(e) =>
             setForm({
@@ -96,12 +64,6 @@ export default function Register() {
           className="w-full border rounded-lg px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-background-focus"
           placeholder="xxxx@correo.uady.mx"
         />
-        {errors.institutional_email_confirmation &&
-          touched.institutional_email_confirmation && (
-            <p className="text-red-500 text-sm">
-              {errors.institutional_email_confirmation}
-            </p>
-          )}
 
         <button
           type="submit"

@@ -1,8 +1,11 @@
-import { useAuth } from "../hooks/useAuth";
 import React, { useEffect, useRef } from "react";
 
 export default function ProfilePicture() {
-  const { user, logout } = useAuth(); // asumo que tienes logout()
+  const user = {
+    nombres: "Usuario",
+    primer_apellido: "Ejemplo",
+    foto_url: "", // URL de la foto de perfil o vacío si no hay foto
+  };
   const [isOpen, setIsOpen] = React.useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -73,7 +76,6 @@ export default function ProfilePicture() {
         <button
           onClick={() => {
             setIsOpen(false);
-            logout();
           }}
           className="w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50 rounded-lg"
         >
