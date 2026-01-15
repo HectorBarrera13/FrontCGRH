@@ -1,10 +1,12 @@
 import { useSearchParams } from "react-router-dom";
 import { CircleX, CircleCheck } from "./../assets/icons";
 import { StatusCard } from "./MessageCard";
+import { useNavigate } from "react-router-dom";
 
 export default function EmailStatus() {
   const [searchParams] = useSearchParams();
   const status = searchParams.get("status");
+  const navigate = useNavigate();
 
   if (status === "enviado") {
     return (
@@ -25,6 +27,7 @@ export default function EmailStatus() {
         <button
           type="button"
           className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          onClick={() => navigate("/login")}
         >
           Volver al login
         </button>
@@ -44,6 +47,7 @@ export default function EmailStatus() {
         <button
           type="button"
           className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          onClick={() => navigate("/login")}
         >
           Volver al login
         </button>
@@ -63,6 +67,7 @@ export default function EmailStatus() {
         <button
           type="button"
           className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          onClick={() => navigate("/login")}
         >
           Volver al login
         </button>
@@ -82,6 +87,7 @@ export default function EmailStatus() {
         <button
           type="button"
           className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          onClick={() => navigate("/registro")}
         >
           Volver al Registro
         </button>
@@ -101,6 +107,7 @@ export default function EmailStatus() {
         <button
           type="button"
           className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          onClick={() => navigate("/registro/paso1")}
         >
           Volver al Registro
         </button>

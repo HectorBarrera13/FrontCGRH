@@ -12,26 +12,9 @@ export default function Register2() {
   // Simulamos un alias estático que vendría del paso anterior
   const alias = "usuario.prueba@uady.mx";
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Simulación de validación básica
-    if (!form.password || !form.password_confirmation) {
-      alert("Por favor, completa los campos.");
-      return;
-    }
-
-    console.log("Registro completado con éxito (Modo Estático)");
-    // Redirección directa al éxito
-    navigate("/registro/email-enviado");
-  };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm"
-      >
+      <form className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center text-text">
           Registro de Empleado
         </h2>
@@ -48,7 +31,7 @@ export default function Register2() {
 
         <label className="block mb-2 text-sm font-semibold">Contraseña:</label>
         <input
-          type="password"
+          type="text"
           name="password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
@@ -61,7 +44,7 @@ export default function Register2() {
           Confirmar contraseña:
         </label>
         <input
-          type="password"
+          type="text"
           name="password_confirmation"
           value={form.password_confirmation}
           onChange={(e) =>
@@ -73,8 +56,8 @@ export default function Register2() {
         />
 
         <button
-          type="submit"
           className="w-full bg-primary text-white py-2 rounded-lg hover:bg-accent transition-colors"
+          onClick={() => navigate("/registro/email?status=enviado")}
         >
           Finalizar Registro
         </button>
