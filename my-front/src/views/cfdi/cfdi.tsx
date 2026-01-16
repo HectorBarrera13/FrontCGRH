@@ -18,7 +18,57 @@ const MOCK_PAYROLL_RESPONSE: {
   total: 1,
   data: [
     {
+      id: 1,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "10",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 2,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "09",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 3,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "08",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 4,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "07",
+      department: "Fac Enfermeria",
+    },
+    {
       id: 5,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "06",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 6,
       folio: "202505000100300",
       payment_date: "2025-03-15",
       start_date: "2025-03-01",
@@ -27,7 +77,26 @@ const MOCK_PAYROLL_RESPONSE: {
       fortnight: "05",
       department: "Fac Enfermeria",
     },
-    // Puedes agregar más objetos aquí para probar el scroll
+    {
+      id: 7,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 8,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
   ],
 };
 
@@ -85,7 +154,7 @@ export default function Cfdi() {
       <div className="flex-1 flex flex-col">
         <TopBar />
 
-        <PageTitle title="Nóminas (Modo Estático)" />
+        <PageTitle title="Nóminas CFDI" />
 
         <div className="flex flex-col items-center justify-start">
           <div className="w-[90%] rounded-lg border border-gray-200 shadow-sm mb-4 bg-white">
