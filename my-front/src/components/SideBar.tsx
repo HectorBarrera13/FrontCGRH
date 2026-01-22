@@ -47,12 +47,15 @@ export default function SideBar() {
   const [isOpen, setIsOpen] = React.useState(true);
 
   return (
-    <aside className="h-auto w-min bg-secondary border-none items-center flex flex-col text-white shadow-lg transition-all duration-300 ease-in-out">
+    <aside
+      // Cambiamos w-min por un ancho fijo según el estado (64px colapsado, 256px abierto)
+      className={`${isOpen ? "w-min" : "w-min"} h-screen bg-secondary border-none items-center flex flex-col text-white shadow-lg transition-all duration-300 ease-in-out`}
+    >
       {/* Header */}
-      <div className="h-16 flex items-center gap-3 px-2 w-full  text-white shadow-lg">
+      <div className="h-16 flex items-center gap-3 px-2 w-full text-white shadow-lg">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-md hover:bg-accent "
+          className="p-2 rounded-md hover:bg-accent"
         >
           <Menu
             className={`w-8 h-8 transition-transform duration-300 ${
@@ -62,25 +65,24 @@ export default function SideBar() {
         </button>
 
         {isOpen && (
-          <span className="font-semibold text-lg ${isOpen ? 'opacity-100' : 'opacity-0'}">
+          <span className="font-semibold text-lg transition-opacity duration-300">
             Menú
           </span>
         )}
       </div>
 
       {/* Sections */}
-      <nav className="flex-1 overflow-y-auto py-2">
+      <nav className="flex-1 overflow-y-auto py-2 w-full overflow-x-hidden">
         {sections.map((section) => (
           <div key={section.title} className="mb-4">
-            {/* Section title + divider */}
             <div
-              className={`mb-2 flex items-center ${
-                isOpen ? "px-4 h-6" : "px-2 h-6 "
+              className={`mb-2 flex items-center transition-all duration-300 ${
+                isOpen ? "px-4 h-6" : "px-2 h-6"
               }`}
             >
               {isOpen ? (
                 <>
-                  <span className="text-lg font-semibold text-accent  whitespace-nowrap">
+                  <span className="text-lg font-semibold text-accent whitespace-nowrap">
                     {section.title}
                   </span>
                   <div className="flex-1 h-1 bg-white/40 ml-3 rounded-lg" />
@@ -90,14 +92,13 @@ export default function SideBar() {
               )}
             </div>
 
-            {/* Items */}
             <div className="space-y-1">
               {section.items.map(({ label, icon: Icon, to }) => (
                 <NavLink
                   key={label}
                   to={to}
-                  className={`w-full flex items-center gap-3 px-2 py-2 rounded-md text-left text-white hover:bg-accent transition ${
-                    isOpen ? "px-4" : "px-2"
+                  className={`w-full flex items-center gap-3 py-2 rounded-md text-left text-white hover:bg-accent transition-all duration-300 ${
+                    isOpen ? "px-4" : "px-2 justify-center"
                   }`}
                 >
                   <Icon className="w-8 h-8 shrink-0" />
@@ -110,7 +111,11 @@ export default function SideBar() {
           </div>
         ))}
       </nav>
-      <div className="mb-4 ">
+
+      {/* Profile Section - Ahora se mantiene centrado respecto al ancho de la barra */}
+      <div
+        className={`mb-6 w-[90%] flex ${isOpen ? "justify-start " : "justify-center"} items-center`}
+      >
         <ProfilePicture />
       </div>
     </aside>

@@ -10,7 +10,7 @@ export default function Register2() {
   });
 
   // Simulamos un alias estático que vendría del paso anterior
-  const alias = "usuario.prueba@uady.mx";
+  const alias = "usuario.prueba";
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">

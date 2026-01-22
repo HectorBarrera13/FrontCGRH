@@ -1,21 +1,12 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+export default function PasswordRecovery() {
   const navigate = useNavigate();
 
-  // Estado simplificado solo para controlar los inputs
-  const [form, setForm] = useState({
-    institutional_email: "",
-    institutional_email_confirmation: "",
-  });
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 2. ¡Esto es vital! Detiene la recarga de la página
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aquí puedes redirigir a donde desees después de "enviar" el correo
-    // Por ejemplo, de vuelta al login o a una pantalla de éxito
-    alert("Si el correo es válido, recibirás instrucciones pronto.");
-    navigate("/login");
+    navigate("/registro/email?status=recovery_instructions_sent");
   };
 
   return (
@@ -36,13 +27,8 @@ export default function Register() {
           Correo Institucional:
         </label>
         <input
-          type="email"
+          type="text"
           name="institutional_email"
-          required
-          value={form.institutional_email}
-          onChange={(e) =>
-            setForm({ ...form, institutional_email: e.target.value })
-          }
           className="w-full border rounded-lg px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#C79316]"
           placeholder="xxxx@correo.uady.mx"
         />
@@ -51,16 +37,8 @@ export default function Register() {
           Confirmación de Correo Institucional:
         </label>
         <input
-          type="email"
+          type="text"
           name="institutional_email_confirmation"
-          required
-          value={form.institutional_email_confirmation}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              institutional_email_confirmation: e.target.value,
-            })
-          }
           className="w-full border rounded-lg px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-background-focus"
           placeholder="xxxx@correo.uady.mx"
         />

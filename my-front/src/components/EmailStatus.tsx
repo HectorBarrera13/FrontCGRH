@@ -115,5 +115,25 @@ export default function EmailStatus() {
     );
   }
 
+  if (status === "recovery_instructions_sent") {
+    return (
+      <StatusCard
+        title="¡Instrucciones enviadas!"
+        mainText="Te hemos enviado un correo con instrucciones para reiniciar tu contraseña."
+        secondaryText="Revisa también tu bandeja de spam."
+        icon={<CircleCheck className="h-16 w-16" />}
+        iconColor="text-green-500"
+      >
+        <button
+          type="button"
+          className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          onClick={() => navigate("/login")}
+        >
+          Volver al login
+        </button>
+      </StatusCard>
+    );
+  }
+
   return <p>Estado inválido</p>;
 }

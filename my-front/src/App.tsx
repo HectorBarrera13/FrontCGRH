@@ -12,6 +12,7 @@ import FondoVivienda from "./views/FondoVivienda";
 import Exenciones from "./views/exenciones/Exenciones";
 import ServicioMedico from "./views/SevicioMédico";
 import Reembolsos from "./views/Reembolsos";
+import PasswordRecovery from "./views/PasswordRecovery";
 
 export default function App() {
   return (
@@ -24,12 +25,7 @@ export default function App() {
 
       <Route path="/registro/email" element={<EmailStatus />} />
 
-      <Route
-        path="/recuperacion-contrasena"
-        element={<Navigate to="/empleados" replace />}
-      />
-
-      <Route path="/recuperacion-contrasena" element={<EmailStatus />} />
+      <Route path="/recuperacion-contrasena" element={<PasswordRecovery />} />
 
       <Route path="/cfdi" element={<Cfdi />} />
 
