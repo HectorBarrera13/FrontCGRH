@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Mail, Phone, CreditCard, Hash, Shield } from "../assets/icons";
+import { Mail, Phone, CreditCard, Hash, Shield } from "../assets/icons";
 
 interface UserCardProps {
   user: {
