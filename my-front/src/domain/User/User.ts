@@ -16,6 +16,7 @@ export interface User {
   segundo_apellido: string;
   email: string;
   telefono: string;
+  roles: string[];
 }
 
 export function ensureUserIsValid({ clave_empleado, rfc, email }: User) {

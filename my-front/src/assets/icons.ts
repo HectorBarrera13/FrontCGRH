@@ -21,4 +21,13 @@ export {
   AlertCircle,
   CircleCheck,
   CircleX,
+  Upload,
+  Search,
+  User,
+  Mail,
+  Phone,
+  CreditCard,
+  Hash,
+  Shield,
+  Pencil,
 } from "lucide-react";

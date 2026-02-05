@@ -135,9 +135,11 @@ export default function Cfdi() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+
   // Mapeo de datos estáticos
   const mappedData: Payroll[] = MOCK_PAYROLL_RESPONSE.data.map(
-    PayrollMapper.fromDto
+    PayrollMapper.fromDto,
   );
 
   const dateFormatter = (date: Date): string => {
@@ -146,6 +148,17 @@ export default function Cfdi() {
 
   const handleDownloadStub = (folio: string) => {
     console.log(`Descargando archivo para el folio: ${folio}`);
+  };
+
+  const handleDownloadAll = () => {
+    console.log("Descargando todos los documentos mostrados");
+    // Aquí puedes implementar la lógica para descargar todos los documentos
+  };
+
+  const toggleRow = (id: number) => {
+    setSelectedRows((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+    );
   };
 
   return (
@@ -242,11 +255,29 @@ export default function Cfdi() {
                         </button>
                       </div>
                     </td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.includes(row.id)}
+                        onChange={() => toggleRow(row.id)}
+                        className="w-5 h-5 rounded border-gray-300 text-[#0f3057] focus:ring-[#0f3057] cursor-pointer accent-[#0f3057]"
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+
+          <div className="w-[90%] flex justify-end mb-4">
+            <button
+              onClick={handleDownloadAll}
+              className="bg-primary hover:bg-accent text-white px-4 py-2 rounded font-medium transition-colors"
+            >
+              Descargar todos
+            </button>
+          </div>
+
           <PaginationBar
             page={currentPage}
             totalItems={MOCK_PAYROLL_RESPONSE.total}

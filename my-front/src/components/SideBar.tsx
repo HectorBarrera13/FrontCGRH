@@ -24,7 +24,7 @@ const sections = [
         icon: PiggyBank,
         to: "/fondo-retiro",
       },
-      { label: "Fondo de Ahorro", icon: Wallet, to: "/fondo-ahorro" },
+      { label: "Caja de Ahorro", icon: Wallet, to: "/caja-ahorro" },
       { label: "Fondo de Vivienda", icon: HouseHeart, to: "/fondo-vivienda" },
     ],
   },
@@ -48,11 +48,14 @@ export default function SideBar() {
 
   return (
     <aside
-      // Cambiamos w-min por un ancho fijo según el estado (64px colapsado, 256px abierto)
-      className={`${isOpen ? "w-min" : "w-min"} h-screen bg-secondary border-none items-center flex flex-col text-white shadow-lg transition-all duration-300 ease-in-out`}
+      className={`
+        ${isOpen ? "w-min" : "w-16"}
+        h-screen bg-secondary flex flex-col text-white shadow-lg
+        transition-all duration-300 ease-in-out
+      `}
     >
       {/* Header */}
-      <div className="h-16 flex items-center gap-3 px-2 w-full text-white shadow-lg">
+      <div className="h-16 flex items-center gap-3 px-2 w-full shadow-lg">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 rounded-md hover:bg-accent"
@@ -64,11 +67,7 @@ export default function SideBar() {
           />
         </button>
 
-        {isOpen && (
-          <span className="font-semibold text-lg transition-opacity duration-300">
-            Menú
-          </span>
-        )}
+        {isOpen && <span className="font-semibold text-lg">Menú</span>}
       </div>
 
       {/* Sections */}
@@ -76,19 +75,19 @@ export default function SideBar() {
         {sections.map((section) => (
           <div key={section.title} className="mb-4">
             <div
-              className={`mb-2 flex items-center transition-all duration-300 ${
-                isOpen ? "px-4 h-6" : "px-2 h-6"
+              className={`mb-2 flex items-center h-8 ${
+                isOpen ? "px-4" : "px-2"
               }`}
             >
               {isOpen ? (
                 <>
-                  <span className="text-lg font-semibold text-accent whitespace-nowrap">
+                  <span className="text-lg font-semibold text-accent whitespace-nowrap leading-none">
                     {section.title}
                   </span>
-                  <div className="flex-1 h-1 bg-white/40 ml-3 rounded-lg" />
+                  <div className="flex-1 h-1 bg-white/40 ml-3 rounded-lg self-center" />
                 </>
               ) : (
-                <div className="w-full h-1 bg-white/40 mx-auto rounded-lg" />
+                <div className="w-full h-1 bg-white/40 rounded-lg self-center" />
               )}
             </div>
 
@@ -97,14 +96,12 @@ export default function SideBar() {
                 <NavLink
                   key={label}
                   to={to}
-                  className={`w-full flex items-center gap-3 py-2 rounded-md text-left text-white hover:bg-accent transition-all duration-300 ${
+                  className={`w-full flex items-center gap-3 py-2 rounded-md hover:bg-accent transition-all ${
                     isOpen ? "px-4" : "px-2 justify-center"
                   }`}
                 >
                   <Icon className="w-8 h-8 shrink-0" />
-                  {isOpen && (
-                    <span className="text-m whitespace-nowrap">{label}</span>
-                  )}
+                  {isOpen && <span className="whitespace-nowrap">{label}</span>}
                 </NavLink>
               ))}
             </div>
@@ -112,11 +109,13 @@ export default function SideBar() {
         ))}
       </nav>
 
-      {/* Profile Section - Ahora se mantiene centrado respecto al ancho de la barra */}
+      {/* Profile */}
       <div
-        className={`mb-6 w-[90%] flex ${isOpen ? "justify-start " : "justify-center"} items-center`}
+        className={`mb-6 w-full flex ${
+          isOpen ? "justify-start px-4" : "justify-center"
+        }`}
       >
-        <ProfilePicture />
+        <ProfilePicture menuPosition="right-start" />
       </div>
     </aside>
   );

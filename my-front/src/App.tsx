@@ -6,7 +6,7 @@ import Home from "./views/Home";
 import Cfdi from "./views/cfdi/cfdi";
 import EmailStatus from "./components/EmailStatus";
 import Becas from "./views/Becas";
-import FondoAhorro from "./views/FondoAhorro";
+import FondoAhorro from "./views/CajaAhorro";
 import FondoRetiro from "./views/FontoRetiro";
 import FondoVivienda from "./views/FondoVivienda";
 import Exenciones from "./views/exenciones/Exenciones";
@@ -31,7 +31,7 @@ export default function App() {
 
       <Route path="/becas" element={<Becas />} />
 
-      <Route path="/fondo-ahorro" element={<FondoAhorro />} />
+      <Route path="/caja-ahorro" element={<FondoAhorro />} />
 
       <Route path="/fondo-retiro" element={<FondoRetiro />} />
 

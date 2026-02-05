@@ -5,14 +5,18 @@ import ProfilePicture from "./ProfilePicture";
 export default function TopBar() {
   return (
     <nav className="w-full bg-primary text-white">
-      <div className="mx-auto flex max-w-[95%] h-16 items-center justify-between px-1 py-4">
+      <div className="h-16 flex items-center px-8">
+        {/* IZQUIERDA */}
         <span className="text-lg font-semibold">Sistema de Prestaciones</span>
-        <ul className="flex gap-6 text-m font-medium align-center items-center">
+
+        {/* ESPACIADOR */}
+        <div className="flex-1" />
+
+        {/* DERECHA */}
+        <ul className="flex items-center gap-6">
+          <li className="text-sm font-medium">Bienvenido User</li>
           <li>
-            <h2>Bienvenido User</h2>
-          </li>
-          <li>
-            <ProfilePicture />
+            <ProfilePicture menuPosition="bottom-start" />
           </li>
         </ul>
       </div>
