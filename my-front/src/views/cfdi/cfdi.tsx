@@ -1,5 +1,3 @@
-import SideBar from "../../components/SideBar";
-import TopBar from "../../components/TopBar";
 import { useState } from "react";
 import { PaginationBar } from "../../components/PaginationBar";
 import { Payroll } from "../../domain/payroll/Payroll";
@@ -162,129 +160,124 @@ export default function Cfdi() {
   };
 
   return (
-    <div className="flex h-screen">
-      <SideBar />
-      <div className="flex-1 flex flex-col">
-        <TopBar />
+    <div className="flex-1 flex flex-col">
+      <PageTitle title="Nóminas CFDI" />
 
-        <PageTitle title="Nóminas CFDI" />
+      <div className="flex flex-col items-center justify-start">
+        <div className="w-[90%] rounded-lg border border-gray-200 shadow-sm mb-4 bg-white">
+          <table className="w-full border-separate border-spacing-0">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  Folio
+                </th>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  Departamento
+                </th>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  Quincena
+                </th>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  <div className="flex items-center justify-center gap-1">
+                    <FilterPopover
+                      label="Fecha de pago"
+                      align="left"
+                      defs={filterDefs}
+                      onChange={(filters) =>
+                        console.log("Filtros cambiados:", filters)
+                      }
+                    />
+                  </div>
+                </th>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  Periodo pagado
+                </th>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  Días
+                </th>
+                <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+                  Descargas
+                </th>
+              </tr>
+            </thead>
 
-        <div className="flex flex-col items-center justify-start">
-          <div className="w-[90%] rounded-lg border border-gray-200 shadow-sm mb-4 bg-white">
-            <table className="w-full border-separate border-spacing-0">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Folio
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Departamento
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Quincena
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    <div className="flex items-center justify-center gap-1">
-                      <FilterPopover
-                        label="Fecha de pago"
-                        align="left"
-                        defs={filterDefs}
-                        onChange={(filters) =>
-                          console.log("Filtros cambiados:", filters)
-                        }
-                      />
+            <tbody className="divide-y divide-gray-200">
+              {mappedData.map((row) => (
+                <tr
+                  key={row.folio}
+                  className="hover:bg-blue-50/50 transition-colors text-center"
+                >
+                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-mono text-primary sm:pl-6">
+                    #{row.folio}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
+                    {row.department}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-center">
+                    <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-sm font-bold text-gray-600">
+                      {row.fortnight}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
+                    {dateFormatter(row.paymentDate)}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
+                    <span className="text-xs">
+                      {dateFormatter(row.startDate)}
+                    </span>
+                    <span className="mx-1 text-gray-300">|</span>
+                    <span className="text-xs">
+                      {dateFormatter(row.endDate)}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-center font-medium">
+                    {row.paidDays}
+                  </td>
+                  <td className="whitespace-nowrap py-4 px-3 text-center text-sm font-medium sm:pr-6">
+                    <div className="flex justify-center gap-3">
+                      <button
+                        className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
+                        onClick={() => handleDownloadStub(row.folio)}
+                      >
+                        PDF
+                      </button>
+                      <button
+                        className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
+                        onClick={() => handleDownloadStub(row.folio)}
+                      >
+                        XML
+                      </button>
                     </div>
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Periodo pagado
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Días
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Descargas
-                  </th>
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(row.id)}
+                      onChange={() => toggleRow(row.id)}
+                      className="w-5 h-5 rounded border-gray-300 text-[#0f3057] focus:ring-[#0f3057] cursor-pointer accent-[#0f3057]"
+                    />
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody className="divide-y divide-gray-200">
-                {mappedData.map((row) => (
-                  <tr
-                    key={row.folio}
-                    className="hover:bg-blue-50/50 transition-colors text-center"
-                  >
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-mono text-primary sm:pl-6">
-                      #{row.folio}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
-                      {row.department}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center">
-                      <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-sm font-bold text-gray-600">
-                        {row.fortnight}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
-                      {dateFormatter(row.paymentDate)}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
-                      <span className="text-xs">
-                        {dateFormatter(row.startDate)}
-                      </span>
-                      <span className="mx-1 text-gray-300">|</span>
-                      <span className="text-xs">
-                        {dateFormatter(row.endDate)}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center font-medium">
-                      {row.paidDays}
-                    </td>
-                    <td className="whitespace-nowrap py-4 px-3 text-center text-sm font-medium sm:pr-6">
-                      <div className="flex justify-center gap-3">
-                        <button
-                          className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
-                          onClick={() => handleDownloadStub(row.folio)}
-                        >
-                          PDF
-                        </button>
-                        <button
-                          className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
-                          onClick={() => handleDownloadStub(row.folio)}
-                        >
-                          XML
-                        </button>
-                      </div>
-                    </td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.includes(row.id)}
-                        onChange={() => toggleRow(row.id)}
-                        className="w-5 h-5 rounded border-gray-300 text-[#0f3057] focus:ring-[#0f3057] cursor-pointer accent-[#0f3057]"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="w-[90%] flex justify-end mb-4">
-            <button
-              onClick={handleDownloadAll}
-              className="bg-primary hover:bg-accent text-white px-4 py-2 rounded font-medium transition-colors"
-            >
-              Descargar todos
-            </button>
-          </div>
-
-          <PaginationBar
-            page={currentPage}
-            totalItems={MOCK_PAYROLL_RESPONSE.total}
-            itemsPerPage={itemsPerPage}
-            onPageChange={(newPage: number) => setCurrentPage(newPage)}
-          />
+              ))}
+            </tbody>
+          </table>
         </div>
+
+        <div className="w-[90%] flex justify-end mb-4">
+          <button
+            onClick={handleDownloadAll}
+            className="bg-primary hover:bg-accent text-white px-4 py-2 rounded font-medium transition-colors"
+          >
+            Descargar todos
+          </button>
+        </div>
+
+        <PaginationBar
+          page={currentPage}
+          totalItems={MOCK_PAYROLL_RESPONSE.total}
+          itemsPerPage={itemsPerPage}
+          onPageChange={(newPage: number) => setCurrentPage(newPage)}
+        />
       </div>
     </div>
   );

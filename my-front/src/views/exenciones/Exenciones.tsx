@@ -1,5 +1,3 @@
-import SideBar from "../../components/SideBar";
-import TopBar from "../../components/TopBar";
 import PageTitle from "../../components/PageTitle";
 import UploadCard from "../../components/UploadCard";
 import { Upload } from "../../assets/icons";
@@ -7,10 +5,7 @@ import { Upload } from "../../assets/icons";
 export default function Exenciones() {
   return (
     <div className="flex h-screen">
-      <SideBar />
       <div className="flex-1 flex flex-col">
-        <TopBar />
-
         <PageTitle title="Exenciones" />
 
         <div className="p-6 bg-gray-100 flex-1 overflow-y-auto">
