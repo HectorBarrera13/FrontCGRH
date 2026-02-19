@@ -48,14 +48,6 @@ export default function Register() {
         />
 
         <FormField
-          label="RFC:"
-          name="rfc"
-          value={form.rfc}
-          onChange={(e) => setForm({ ...form, rfc: e.target.value })}
-          placeholder="RFC de 13 caracteres"
-        />
-
-        <FormField
           label="Correo Institucional:"
           name="email"
           type="email"

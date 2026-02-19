@@ -54,7 +54,7 @@ function useControllableState(params: {
   return [state, setState] as const;
 }
 
-export function FilterPopover({
+export default function FilterPopover({
   label,
   defs,
   value, // 👈 si lo quieres controlado

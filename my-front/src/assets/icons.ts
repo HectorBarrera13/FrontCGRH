@@ -30,4 +30,6 @@ export {
   Hash,
   Shield,
   Pencil,
+  FileUp,
+  ShieldUser,
 } from "lucide-react";

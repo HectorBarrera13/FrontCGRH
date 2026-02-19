@@ -1,48 +1,164 @@
+import { useState } from "react";
+import DynamicTable from "../components/Table";
+import DescriptionCard from "../components/DescriptionCard";
 import PageTitle from "../components/PageTitle";
-import InfoCard from "../components/InfoCard";
-import { HouseHeart, PiggyBank, Wallet } from "../assets/icons";
+import { Wallet } from "lucide-react";
 
-export default function FondoRetiro() {
+type FondoRetiroData = {
+  id: number;
+  employeeKey: string;
+  employeeName: string;
+  lastReportDate: string;
+  initialBalance: number;
+  contributions: number;
+  withdrawals: number;
+  earnings: number;
+  finalBalance: number;
+  vestedRights: number;
+};
+
+export default function FondoRetiroReports() {
+  const [selectedItem, setSelectedItem] = useState<FondoRetiroData | null>(
+    null,
+  );
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  // ✅ Mantener render mientras anima salida
+  const [renderItem, setRenderItem] = useState<FondoRetiroData | null>(null);
+  const [isCardOpen, setIsCardOpen] = useState(false);
+
+  const fondoRetiroData: FondoRetiroData[] = [
+    {
+      id: 1,
+      employeeKey: "EMP001",
+      employeeName: "Juan Pérez García",
+      lastReportDate: "10/03/2026",
+      initialBalance: 50000,
+      contributions: 5000,
+      withdrawals: 1000,
+      earnings: 2500,
+      finalBalance: 56500,
+      vestedRights: 45000,
+    },
+    {
+      id: 2,
+      employeeKey: "EMP001",
+      employeeName: "Juan Pérez García",
+      lastReportDate: "10/02/2026",
+      initialBalance: 75000,
+      contributions: 7500,
+      withdrawals: 0,
+      earnings: 3750,
+      finalBalance: 86250,
+      vestedRights: 68000,
+    },
+    {
+      id: 3,
+      employeeKey: "EMP001",
+      employeeName: "Juan Pérez García",
+      lastReportDate: "10/01/2026",
+      initialBalance: 60000,
+      contributions: 6000,
+      withdrawals: 500,
+      earnings: 3000,
+      finalBalance: 68500,
+      vestedRights: 55000,
+    },
+  ];
+
+  const headers = ["Clave", "Nombre", "Último Reporte", "Saldo Final"];
+
+  const ANIM_MS = 700;
+
+  const handleRowSelect = (index: number) => {
+    if (index === selectedIndex) {
+      // ✅ Cerrar: primero anima, luego desmonta contenido
+      setIsCardOpen(false);
+      setSelectedItem(null);
+      setSelectedIndex(null);
+
+      window.setTimeout(() => {
+        setRenderItem(null);
+      }, ANIM_MS);
+    } else {
+      // ✅ Abrir
+      const item = fondoRetiroData[index];
+      setSelectedItem(item);
+      setSelectedIndex(index);
+
+      setRenderItem(item);
+      setIsCardOpen(true);
+    }
+  };
+
+  const tableData = fondoRetiroData.map((item) => ({
+    employeeKey: <span className="font-semibold">{item.employeeKey}</span>,
+    employeeName: <span className="text-gray-700">{item.employeeName}</span>,
+    lastReportDate: (
+      <span className="text-gray-500">{item.lastReportDate}</span>
+    ),
+    finalBalance: (
+      <span className="font-bold text-green-600">
+        {new Intl.NumberFormat("es-MX", {
+          style: "currency",
+          currency: "MXN",
+        }).format(item.finalBalance)}
+      </span>
+    ),
+  }));
+
+  const handleDownload = () => {
+    if (selectedItem) {
+      console.log("Descargando reporte para:", selectedItem.employeeKey);
+    }
+  };
+
   return (
-    <div className="flex-1 flex flex-col">
-      <PageTitle title="Fondo de Retiro" />
-      <div className="space-y-6 mt-6">
-        <InfoCard
-          title="Saldo Actual"
-          total={25000}
-          information={[{ subtitle: "Total Disponible", amount: "$25,000.00" }]}
-          Icon={() => <Wallet className="w-6 h-6" />}
-          iconColor="text-red-600"
-          borderColor="border-l-red-500"
-          iconBgColor="bg-red-100"
-        />
-        <InfoCard
-          title="Aportaciones del Año"
-          total={5000}
-          information={[
-            { subtitle: "Total Aportado", amount: "$5,000.00" },
-            { subtitle: "Aportación Mensual", amount: "$416.67" },
-          ]}
-          Icon={() => <PiggyBank className="w-6 h-6" />}
-          iconColor="text-green-600"
-          borderColor="border-l-green-500"
-          iconBgColor="bg-green-100"
-        />
-        <InfoCard
-          title="Rendimientos"
-          total={4500}
-          information={[
-            {
-              subtitle: "Ganancias obtenidas en el último trimestre",
-              amount: "$1,200.00",
-            },
-            { subtitle: "Rendimiento Anual", amount: "4,500" },
-          ]}
-          Icon={() => <HouseHeart className="w-6 h-6" />}
-          iconColor="text-blue-600"
-          borderColor="border-l-blue-500"
-          iconBgColor="bg-blue-100"
-        />
+    <div className="flex flex-col h-full">
+      <PageTitle title="Movimientos Fondo de Ahorro para el Retiro" />
+
+      <div className="flex gap-6 flex-1 overflow-hidden">
+        {/* Tabla - Transición suave */}
+        <div className="transition-all duration-700 ease-out w-full">
+          <DynamicTable
+            headers={headers}
+            data={tableData}
+            onRowSelect={handleRowSelect}
+            selectedIndex={selectedIndex}
+          />
+        </div>
+
+        {/* Card - Entrada/salida suave (sin desmontar de golpe) */}
+        <div
+          className={`
+            flex-shrink-0 overflow-hidden
+            transition-all duration-700 ease-out
+            transform-gpu will-change-transform
+            ${
+              isCardOpen
+                ? "opacity-100 translate-x-0 scale-100 max-w-[420px]"
+                : "opacity-0 translate-x-6 scale-95 max-w-0 pointer-events-none"
+            }
+          `}
+        >
+          {renderItem && (
+            <DescriptionCard
+              lastReportDate={renderItem.lastReportDate}
+              employeeKey={renderItem.employeeKey}
+              employeeName={renderItem.employeeName}
+              initialBalance={renderItem.initialBalance}
+              contributions={renderItem.contributions}
+              withdrawals={renderItem.withdrawals}
+              earnings={renderItem.earnings}
+              finalBalance={renderItem.finalBalance}
+              vestedRights={renderItem.vestedRights}
+              onDownload={handleDownload}
+              icon={Wallet}
+              iconColor="text-blue-600"
+              iconBgColor="bg-blue-50"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

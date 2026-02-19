@@ -7,13 +7,15 @@ import Cfdi from "./views/cfdi/cfdi";
 import PasswordRecovery from "./views/PasswordRecovery";
 import EmailStatus from "./components/EmailStatus";
 import Becas from "./views/Becas";
-import FondoAhorro from "./views/CajaAhorro";
+import CajaAhorro from "./views/CajaAhorro";
 import FondoRetiro from "./views/FontoRetiro";
 import FondoVivienda from "./views/FondoVivienda";
 import Exenciones from "./views/exenciones/Exenciones";
 import ServicioMedico from "./views/SevicioMédico";
 import Reembolsos from "./views/Reembolsos";
 import MainContent from "./components/MainContent";
+import Admin from "./views/Admin";
+import Coordinacion from "./views/Coordinacion";
 
 export default function App() {
   return (
@@ -49,10 +51,10 @@ export default function App() {
       />
 
       <Route
-        path="/fondo-ahorro"
+        path="/caja-ahorro"
         element={
           <MainContent>
-            <FondoAhorro />
+            <CajaAhorro />
           </MainContent>
         }
       />
@@ -98,6 +100,24 @@ export default function App() {
         element={
           <MainContent>
             <Reembolsos />
+          </MainContent>
+        }
+      />
+
+      <Route
+        path="/admin"
+        element={
+          <MainContent>
+            <Admin />
+          </MainContent>
+        }
+      />
+
+      <Route
+        path="/coordinacion"
+        element={
+          <MainContent>
+            <Coordinacion />
           </MainContent>
         }
       />

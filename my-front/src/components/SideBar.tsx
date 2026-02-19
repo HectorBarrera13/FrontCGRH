@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import ProfilePicture from "./ProfilePicture";
+import ProfileMenuWrapper from "./ProfileMenuWrapper";
+import { useState } from "react";
 
 import {
   Tag,
@@ -11,36 +13,9 @@ import {
   Wallet,
   HouseHeart,
   Menu,
+  FileUp,
+  ShieldUser,
 } from "../assets/icons";
-
-const sections = [
-  {
-    title: "Nómina Digital",
-    items: [
-      { label: "CFDI", icon: FileText, to: "/cfdi" },
-      {
-        label: "Fondo de Ahorro para el Retiro",
-        icon: PiggyBank,
-        to: "/fondo-retiro",
-      },
-      { label: "Fondo de Ahorro", icon: Wallet, to: "/fondo-ahorro" },
-      { label: "Fondo de Vivienda", icon: HouseHeart, to: "/fondo-vivienda" },
-    ],
-  },
-  {
-    title: "Prestaciones",
-    items: [
-      { label: "Exenciones", icon: Tag, to: "/exenciones" },
-      {
-        label: "Vigencia del Servicio Médico",
-        icon: Stethoscope,
-        to: "/servicio-medico",
-      },
-      { label: "Becas", icon: GraduationCap, to: "/becas" },
-      { label: "Reembolsos", icon: Receipt, to: "/reembolsos" },
-    ],
-  },
-];
 
 export default function SideBar({
   isOpen,
@@ -49,6 +24,14 @@ export default function SideBar({
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const user = {
+    nombres: "Juan Pérez García",
+    email: "juan.perez@correo.uady.mx",
+  };
+
+  const [activeRole, setActiveRole] = useState<string | null>("Admin_becas");
+
+  const sections = getSections(activeRole);
   return (
     <>
       {/* Backdrop - Solo en móvil cuando está abierto */}
@@ -134,12 +117,84 @@ export default function SideBar({
         </nav>
 
         {/* Profile */}
-        <div
-          className={`mt-auto bg-primary mb-6 w-full px-2 ${isOpen ? "" : "py-2 hidden md:block"}`}
-        >
-          <ProfilePicture menuPosition="right-start" />
-        </div>
+        <ProfileMenuWrapper menuPosition="right-start">
+          <div
+            className={`
+            mt-auto mb-6 w-full px-2 pb-3
+            ${isOpen ? "" : "hidden md:block"}
+          `}
+          >
+            <div className="p-1 flex items-center rounded-lg">
+              {/* Contenedor fijo como los iconos del menú */}
+              <div className="w-10 h-10 shrink-0 flex items-center justify-center">
+                <ProfilePicture />
+              </div>
+
+              {/* El texto aparece sin mover el icono */}
+              <div
+                className={`
+                overflow-hidden transition-all duration-300 ease-out
+                ${isOpen ? "opacity-100 ml-3 max-w-[220px]" : "opacity-0 ml-0 max-w-0"}
+              `}
+              >
+                {user && (
+                  <div className="flex flex-col leading-tight">
+                    <p className="text-sm font-medium truncate">
+                      {user.nombres}
+                    </p>
+                    <p className="text-xs text-white/70 truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </ProfileMenuWrapper>
       </aside>
     </>
   );
 }
+
+const getSections = (activeRole: string | null) => {
+  const baseSections = [
+    {
+      title: "Nómina Digital",
+      items: [
+        { label: "CFDI", icon: FileText, to: "/cfdi" },
+        {
+          label: "Fondo de Ahorro para el Retiro",
+          icon: PiggyBank,
+          to: "/fondo-retiro",
+        },
+        { label: "Caja de Ahorro", icon: Wallet, to: "/caja-ahorro" },
+        { label: "Fondo de Vivienda", icon: HouseHeart, to: "/fondo-vivienda" },
+      ],
+    },
+    {
+      title: "Prestaciones",
+      items: [
+        { label: "Exenciones", icon: Tag, to: "/exenciones" },
+        {
+          label: "Vigencia del Servicio Médico",
+          icon: Stethoscope,
+          to: "/servicio-medico",
+        },
+        { label: "Becas", icon: GraduationCap, to: "/becas" },
+        { label: "Reembolsos", icon: Receipt, to: "/reembolsos" },
+      ],
+    },
+  ];
+
+  if (activeRole === "Admin_becas") {
+    baseSections.push({
+      title: "Administración",
+      items: [
+        { label: "Subir Archivos", icon: FileUp, to: "/admin" },
+        { label: "Roles y Permisos", icon: ShieldUser, to: "/coordinacion" },
+      ],
+    });
+  }
+
+  return baseSections;
+};

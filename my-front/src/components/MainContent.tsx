@@ -20,6 +20,7 @@ export default function MainContent({ children }: MainContentProps) {
         className={`
           fixed
           top-16
+          bottom-0
           right-0
           transition-all duration-300
           left-16

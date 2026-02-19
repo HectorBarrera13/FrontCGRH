@@ -16,7 +16,7 @@ interface UserCardProps {
 
 const UserCard: React.FC<UserCardProps> = ({ user }) => {
   return (
-    <div className="max-w-md bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+    <div className="w-full bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
       {/* Encabezado con Iniciales */}
       <div className="bg-primary p-6 flex items-center space-x-4">
         <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white text-2xl font-bold border-2 border-accent/30">

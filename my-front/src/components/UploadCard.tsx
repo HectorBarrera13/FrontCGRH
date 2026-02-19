@@ -34,7 +34,7 @@ export default function UploadCard({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+    <div className="w-full flex-1 mx-auto bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
       <div className="flex flex-col mb-4">
         {/* Título estilizado como las etiquetas del login */}
         <span className="text-[15px] font-bold text-[#0a1f44] mb-3">

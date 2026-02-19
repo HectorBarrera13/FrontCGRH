@@ -1,10 +1,12 @@
 // components/TopBar.tsx;
 import ProfilePicture from "./ProfilePicture";
+import ProfileMenuWrapper from "./ProfileMenuWrapper";
 
 export default function TopBar({ isOpen }: { isOpen: boolean }) {
   const user = {
     nombres: "Juan Pérez",
-    email: "",
+    email: "juan.perez@correo.uady.mx",
+    roles: ["Administrador", "Empleado"],
   };
 
   return (
@@ -26,9 +28,11 @@ export default function TopBar({ isOpen }: { isOpen: boolean }) {
           <li className="hidden md:block">
             <h2>Bienvenido {user?.nombres}</h2>
           </li>
-          <li>
-            <ProfilePicture menuPosition="right-start" />
-          </li>
+          <ProfileMenuWrapper menuPosition="bottom-start">
+            <li>
+              <ProfilePicture />
+            </li>
+          </ProfileMenuWrapper>
         </ul>
       </div>
     </nav>
