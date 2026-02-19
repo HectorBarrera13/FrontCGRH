@@ -142,7 +142,6 @@ export default function Cfdi() {
   const allIds = mappedData.map((row) => row.id);
   const allSelected =
     allIds.length > 0 && allIds.every((id) => selectedIds.has(id));
-  const someSelected = allIds.some((id) => selectedIds.has(id)) && !allSelected;
 
   const toggleAll = () => {
     if (allSelected) {
@@ -155,7 +154,11 @@ export default function Cfdi() {
   const toggleOne = (id: number) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   };

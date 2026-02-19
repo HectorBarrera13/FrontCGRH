@@ -47,20 +47,12 @@ export default function ProfileMenuWrapper({
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: "menu" });
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    click,
-    dismiss,
-    role,
-  ]);
+  const { getFloatingProps } = useInteractions([click, dismiss, role]);
 
   const roles: string[] = user?.roles ?? [];
 
   const trigger = isValidElement(children)
-    ? cloneElement(children, {
-        ref: refs.setReference,
-        ...getReferenceProps(children.props),
-        "aria-label": children.props["aria-label"] ?? "Abrir menú de perfil",
-      })
+    ? cloneElement(children, {})
     : children;
 
   return (

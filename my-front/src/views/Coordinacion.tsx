@@ -133,7 +133,7 @@ export default function Coordinacion() {
               <SearchBar
                 placeholder="Buscar por clave, nombre, RFC o email..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => setSearch(e)}
               />
 
               {/* ── TABLE CARD ── */}

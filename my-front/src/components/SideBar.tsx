@@ -29,7 +29,7 @@ export default function SideBar({
     email: "juan.perez@correo.uady.mx",
   };
 
-  const [activeRole, setActiveRole] = useState<string | null>("Admin_becas");
+  const [activeRole] = useState<string | null>("Admin_becas");
 
   const sections = getSections(activeRole);
   return (
