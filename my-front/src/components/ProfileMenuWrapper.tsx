@@ -47,12 +47,15 @@ export default function ProfileMenuWrapper({
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: "menu" });
 
-  const { getFloatingProps } = useInteractions([click, dismiss, role]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
   const roles: string[] = user?.roles ?? [];
 
   const trigger = isValidElement(children)
-    ? cloneElement(children, {})
+    ? cloneElement(children, {
+        ref: refs.setReference,
+        ...getReferenceProps(),
+      })
     : children;
 
   return (
@@ -180,3 +183,4 @@ function RoleSubmenu({
     </div>
   );
 }
+
