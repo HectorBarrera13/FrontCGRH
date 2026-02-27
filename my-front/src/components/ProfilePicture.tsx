@@ -1,91 +1,42 @@
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { forwardRef, useMemo } from "react";
 
-export default function ProfilePicture() {
-  const navigate = useNavigate();
+type ProfilePictureProps = {
+  className?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  "aria-label"?: string;
+};
 
-  const user = {
-    nombres: "Usuario",
-    primer_apellido: "Ejemplo",
-    foto_url: "", // URL de la foto de perfil o vacío si no hay foto
-  };
-  const [isOpen, setIsOpen] = React.useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  const getInitials = (nombre?: string, apellido?: string) => {
-    const n = nombre?.charAt(0) || "";
-    const a = apellido?.charAt(0) || "";
-    return (n + a).toUpperCase() || "U";
-  };
-
-  const initials = getInitials(user?.nombres, user?.primer_apellido);
-
-  const hasImage = Boolean(user?.foto_url);
-
-  // 🔹 cerrar al hacer click fuera
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const onClickOutside = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+/**
+ * SOLO render del avatar. No maneja menús.
+ * forwardRef para que el wrapper pueda ponerlo como referencia del Floating UI.
+ */
+const ProfilePicture = forwardRef<HTMLButtonElement, ProfilePictureProps>(
+  ({ className = "", onClick, ...rest }, ref) => {
+    const user = {
+      nombres: "Juan Pérez",
+      primer_apellido: "García",
     };
 
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
-  }, [isOpen]);
+    const initials = useMemo(() => {
+      const n = user?.nombres?.charAt(0) || "";
+      const a = user?.primer_apellido?.charAt(0) || "";
+      return (n + a).toUpperCase() || "U";
+    }, [user?.nombres, user?.primer_apellido]);
 
-  return (
-    <div ref={rootRef} className="relative">
-      {/* Botón de perfil */}
+    return (
       <button
-        onClick={() => setIsOpen((o) => !o)}
-        className="w-10 h-10 rounded-full overflow-hidden bg-accent shadow-md flex items-center justify-center focus:outline-none"
+        ref={ref}
+        onClick={onClick}
+        className={`w-10 h-10 rounded-full overflow-hidden bg-accent shadow-md flex items-center justify-center focus:outline-none ${className}`}
+        {...rest}
       >
-        {hasImage ? (
-          <img
-            src={user?.foto_url}
-            alt="Foto de perfil"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <span className="text-white font-medium text-sm select-none">
-            {initials}
-          </span>
-        )}
+        <span className="text-white font-medium text-sm select-none">
+          {initials}
+        </span>
       </button>
+    );
+  },
+);
 
-      {/* Panel */}
-      <div
-        className={`
-          absolute right-0 mt-2 w-40 rounded-lg border border-gray-200 bg-white shadow-lg
-          transition-all duration-150 ease-out origin-top-right
-          ${
-            isOpen
-              ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 scale-95 -translate-y-1 pointer-events-none"
-          }
-        `}
-      >
-        <button
-          onClick={() => {
-            setIsOpen(false);
-          }}
-          className="w-full px-4 py-2 text-sm text-left text-primary hover:bg-gray-100 rounded-lg"
-        >
-          Rol
-        </button>
-        <button
-          onClick={() => {
-            setIsOpen(false);
-            navigate("/login");
-          }}
-          className="w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50 rounded-lg"
-        >
-          Cerrar sesión
-        </button>
-      </div>
-    </div>
-  );
-}
+ProfilePicture.displayName = "ProfilePicture";
+export default ProfilePicture;

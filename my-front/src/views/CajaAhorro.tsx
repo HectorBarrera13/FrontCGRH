@@ -4,7 +4,7 @@ import DescriptionCard from "../components/DescriptionCard";
 import PageTitle from "../components/PageTitle";
 import { Wallet } from "lucide-react";
 
-type FondoRetiroData = {
+type FarData = {
   id: number;
   employeeKey: string;
   employeeName: string;
@@ -17,17 +17,15 @@ type FondoRetiroData = {
   vestedRights: number;
 };
 
-export default function FondoRetiroReports() {
-  const [selectedItem, setSelectedItem] = useState<FondoRetiroData | null>(
-    null,
-  );
+export default function CajaAhorro() {
+  const [selectedItem, setSelectedItem] = useState<FarData | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // ✅ Mantener render mientras anima salida
-  const [renderItem, setRenderItem] = useState<FondoRetiroData | null>(null);
+  const [renderItem, setRenderItem] = useState<FarData | null>(null);
   const [isCardOpen, setIsCardOpen] = useState(false);
 
-  const fondoRetiroData: FondoRetiroData[] = [
+  const farData: FarData[] = [
     {
       id: 1,
       employeeKey: "EMP001",
@@ -82,7 +80,7 @@ export default function FondoRetiroReports() {
       }, ANIM_MS);
     } else {
       // ✅ Abrir
-      const item = fondoRetiroData[index];
+      const item = farData[index];
       setSelectedItem(item);
       setSelectedIndex(index);
 
@@ -91,7 +89,7 @@ export default function FondoRetiroReports() {
     }
   };
 
-  const tableData = fondoRetiroData.map((item) => ({
+  const tableData = farData.map((item) => ({
     employeeKey: <span className="font-semibold">{item.employeeKey}</span>,
     employeeName: <span className="text-gray-700">{item.employeeName}</span>,
     lastReportDate: (
@@ -115,7 +113,7 @@ export default function FondoRetiroReports() {
 
   return (
     <div className="flex flex-col h-full">
-      <PageTitle title="Movimientos Fondo de Ahorro para el Retiro" />
+      <PageTitle title="Movimientos Caja de Ahorro" />
 
       <div className="flex gap-6 flex-1 overflow-hidden">
         {/* Tabla - Transición suave */}

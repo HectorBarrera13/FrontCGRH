@@ -1,12 +1,11 @@
-import SideBar from "../../components/SideBar";
-import TopBar from "../../components/TopBar";
 import { useState } from "react";
 import { PaginationBar } from "../../components/PaginationBar";
 import { Payroll } from "../../domain/payroll/Payroll";
 import { PayrollMapper } from "../../domain/payroll/Mapper";
 import type { PayrollDto } from "../../domain/payroll/PayrollDto";
-import { FilterPopover } from "../../components/Filter";
+import FilterPopover from "../../components/Filter";
 import PageTitle from "../../components/PageTitle";
+import Table from "../../components/Table";
 
 // --- DATOS ESTÁTICOS ---
 const MOCK_PAYROLL_RESPONSE: {
@@ -15,7 +14,7 @@ const MOCK_PAYROLL_RESPONSE: {
   current_page: number;
 } = {
   current_page: 1,
-  total: 1,
+  total: 24,
   data: [
     {
       id: 1,
@@ -114,7 +113,6 @@ const MONTHS = [
   "Noviembre",
   "Diciembre",
 ];
-
 const YEARS = [2022, 2023, 2024, 2025, 2026];
 
 const filterDefs = [
@@ -131,14 +129,39 @@ const filterDefs = [
 ];
 
 export default function Cfdi() {
-  // Estados simplificados (sin fetch)
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const itemsPerPage = 10;
 
-  // Mapeo de datos estáticos
+  // Mapeo de datos
   const mappedData: Payroll[] = MOCK_PAYROLL_RESPONSE.data.map(
-    PayrollMapper.fromDto
+    PayrollMapper.fromDto,
   );
+
+  // Lógica de selección
+  const allIds = mappedData.map((row) => row.id);
+  const allSelected =
+    allIds.length > 0 && allIds.every((id) => selectedIds.has(id));
+
+  const toggleAll = () => {
+    if (allSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(allIds));
+    }
+  };
+
+  const toggleOne = (id: number) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
 
   const dateFormatter = (date: Date): string => {
     return date.toLocaleDateString("es-MX");
@@ -148,111 +171,108 @@ export default function Cfdi() {
     console.log(`Descargando archivo para el folio: ${folio}`);
   };
 
+  // Definir headers
+  const headers = [
+    "Folio",
+    "Departamento",
+    "Quincena",
+    <div key="filter-header" className="flex items-center justify-center gap-1">
+      <FilterPopover
+        label="Fecha de pago"
+        align="left"
+        defs={filterDefs}
+        onChange={(filters) =>
+          console.log("Filtros estáticos cambiados:", filters)
+        }
+      />
+    </div>,
+    "Periodo pagado",
+    "Días",
+    "Descargas",
+    <div key="actions-header" className="flex justify-center">
+      <input
+        type="checkbox"
+        className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer accent-primary"
+        checked={allSelected}
+        onChange={toggleAll}
+      />
+    </div>,
+  ];
+
+  // Transformar datos para el componente Table
+  const tableData = mappedData.map((row) => ({
+    folio: <span className="font-mono text-primary">#{row.folio}</span>,
+    department: <span className="text-gray-600">{row.department}</span>,
+    fortnight: (
+      <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-sm font-bold text-gray-600">
+        {row.fortnight}
+      </span>
+    ),
+    paymentDate: (
+      <span className="text-gray-500">{dateFormatter(row.paymentDate)}</span>
+    ),
+    period: (
+      <span className="text-gray-500">
+        <span className="text-xs">{dateFormatter(row.startDate)}</span>
+        <span className="mx-1 text-gray-300">|</span>
+        <span className="text-xs">{dateFormatter(row.endDate)}</span>
+      </span>
+    ),
+    paidDays: <span className="font-medium">{row.paidDays}</span>,
+    actions: (
+      <div className="flex justify-center gap-3">
+        <button
+          className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
+          onClick={() => handleDownloadStub(row.folio)}
+        >
+          PDF
+        </button>
+        <button
+          className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
+          onClick={() => handleDownloadStub(row.folio)}
+        >
+          XML
+        </button>
+      </div>
+    ),
+    select: (
+      <input
+        type="checkbox"
+        className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary p-0 m-0 cursor-pointer accent-primary"
+        checked={selectedIds.has(row.id)}
+        onChange={() => toggleOne(row.id)}
+      />
+    ),
+  }));
+
   return (
-    <div className="flex h-screen">
-      <SideBar />
+    <div className="flex">
       <div className="flex-1 flex flex-col">
-        <TopBar />
+        <PageTitle title="Comprobante Fiscal Digital por Internet (CFDI)" />
 
-        <PageTitle title="Nóminas CFDI" />
-
-        <div className="flex flex-col items-center justify-start">
-          <div className="w-[90%] rounded-lg border border-gray-200 shadow-sm mb-4 bg-white">
-            <table className="w-full border-separate border-spacing-0">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Folio
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Departamento
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Quincena
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    <div className="flex items-center justify-center gap-1">
-                      <FilterPopover
-                        label="Fecha de pago"
-                        align="left"
-                        defs={filterDefs}
-                        onChange={(filters) =>
-                          console.log("Filtros cambiados:", filters)
-                        }
-                      />
-                    </div>
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Periodo pagado
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Días
-                  </th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
-                    Descargas
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-gray-200">
-                {mappedData.map((row) => (
-                  <tr
-                    key={row.folio}
-                    className="hover:bg-blue-50/50 transition-colors text-center"
-                  >
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-mono text-primary sm:pl-6">
-                      #{row.folio}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
-                      {row.department}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center">
-                      <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-sm font-bold text-gray-600">
-                        {row.fortnight}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
-                      {dateFormatter(row.paymentDate)}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">
-                      <span className="text-xs">
-                        {dateFormatter(row.startDate)}
-                      </span>
-                      <span className="mx-1 text-gray-300">|</span>
-                      <span className="text-xs">
-                        {dateFormatter(row.endDate)}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-center font-medium">
-                      {row.paidDays}
-                    </td>
-                    <td className="whitespace-nowrap py-4 px-3 text-center text-sm font-medium sm:pr-6">
-                      <div className="flex justify-center gap-3">
-                        <button
-                          className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
-                          onClick={() => handleDownloadStub(row.folio)}
-                        >
-                          PDF
-                        </button>
-                        <button
-                          className="text-white hover:bg-accent bg-primary px-2 py-1 rounded"
-                          onClick={() => handleDownloadStub(row.folio)}
-                        >
-                          XML
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <Table headers={headers} data={tableData} selectedIndex={-1} />
+        <div className="flex items-center justify-between px-4 py-2 w-[90%] mx-auto">
           <PaginationBar
             page={currentPage}
             totalItems={MOCK_PAYROLL_RESPONSE.total}
             itemsPerPage={itemsPerPage}
             onPageChange={(newPage: number) => setCurrentPage(newPage)}
           />
+          {selectedIds.size > 0 ? (
+            <button
+              className="flex items-center gap-2 bg-primary text-white hover:bg-accent px-4 py-2 rounded font-medium"
+              onClick={() => {
+                selectedIds.forEach((id) => {
+                  const row = mappedData.find((r) => r.id === id);
+                  if (row) handleDownloadStub(row.folio);
+                });
+              }}
+            >
+              Descargar seleccionados ({selectedIds.size})
+            </button>
+          ) : (
+            <div /> // espaciador para mantener la paginación a la derecha... o centrada
+          )}
         </div>
       </div>
     </div>
