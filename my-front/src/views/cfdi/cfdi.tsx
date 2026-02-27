@@ -96,6 +96,166 @@ const MOCK_PAYROLL_RESPONSE: {
       fortnight: "05",
       department: "Fac Enfermeria",
     },
+    {
+      id: 9,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "10",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 10,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "09",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 11,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "08",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 12,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "07",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 13,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "06",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 14,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 15,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 16,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 17,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "10",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 18,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "09",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 19,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "08",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 20,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "07",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 21,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "06",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 22,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 23,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
+    {
+      id: 24,
+      folio: "202505000100300",
+      payment_date: "2025-03-15",
+      start_date: "2025-03-01",
+      end_date: "2025-03-15",
+      paid_days: 15,
+      fortnight: "05",
+      department: "Fac Enfermeria",
+    },
   ],
 };
 
@@ -249,8 +409,6 @@ export default function Cfdi() {
     <div className="flex">
       <div className="flex-1 flex flex-col">
         <PageTitle title="Comprobante Fiscal Digital por Internet (CFDI)" />
-
-        <Table headers={headers} data={tableData} selectedIndex={-1} />
         <div className="flex items-center justify-between px-4 py-2 w-[90%] mx-auto">
           <PaginationBar
             page={currentPage}
@@ -258,22 +416,20 @@ export default function Cfdi() {
             itemsPerPage={itemsPerPage}
             onPageChange={(newPage: number) => setCurrentPage(newPage)}
           />
-          {selectedIds.size > 0 ? (
-            <button
-              className="flex items-center gap-2 bg-primary text-white hover:bg-accent px-4 py-2 rounded font-medium"
-              onClick={() => {
-                selectedIds.forEach((id) => {
-                  const row = mappedData.find((r) => r.id === id);
-                  if (row) handleDownloadStub(row.folio);
-                });
-              }}
-            >
-              Descargar seleccionados ({selectedIds.size})
-            </button>
-          ) : (
-            <div /> // espaciador para mantener la paginación a la derecha... o centrada
-          )}
+
+          <button
+            className={`flex items-center gap-2  text-white ${selectedIds.size > 0 ? "bg-primary hover:bg-accent" : "bg-gray-400 cursor-not-allowed"} px-4 py-2 rounded font-medium`}
+            onClick={() => {
+              selectedIds.forEach((id) => {
+                const row = mappedData.find((r) => r.id === id);
+                if (row) handleDownloadStub(row.folio);
+              });
+            }}
+          >
+            Descargar seleccionados ({selectedIds.size})
+          </button>
         </div>
+        <Table headers={headers} data={tableData} selectedIndex={-1} />
       </div>
     </div>
   );
