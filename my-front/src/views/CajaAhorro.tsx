@@ -64,7 +64,7 @@ export default function CajaAhorro() {
     },
   ];
 
-  const headers = ["Clave", "Nombre", "Último Reporte", "Saldo Final"];
+  const headers = ["Clave", "Nombre", "Último Reporte", "Visualizar"];
 
   const ANIM_MS = 700;
 
@@ -95,13 +95,17 @@ export default function CajaAhorro() {
     lastReportDate: (
       <span className="text-gray-500">{item.lastReportDate}</span>
     ),
-    finalBalance: (
-      <span className="font-bold text-green-600">
-        {new Intl.NumberFormat("es-MX", {
-          style: "currency",
-          currency: "MXN",
-        }).format(item.finalBalance)}
-      </span>
+    view: (
+      <button
+        className="text-white hover:bg-accent bg-primary px-2 py-1 rounded cursor-pointer transition-colors duration-200"
+        onClick={(e) => {
+          e.stopPropagation();
+          const index = farData.findIndex((data) => data.id === item.id);
+          handleRowSelect(index);
+        }}
+      >
+        Ver Detalles
+      </button>
     ),
   }));
 
