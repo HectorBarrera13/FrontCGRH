@@ -10,12 +10,12 @@ type FondoRetiroData = {
   employeeName: string;
   lastReportDate: string;
   payment: string;
-  initialBalance: number;
-  contributions: number;
-  withdrawals: number;
-  earnings: number;
-  finalBalance: number;
-  vestedRights: number;
+  initialBalance: string;
+  contributions: string;
+  withdrawals: string;
+  earnings: string;
+  finalBalance: string;
+  vestedRights: string;
 };
 
 export default function FondoRetiroReports() {
@@ -35,12 +35,12 @@ export default function FondoRetiroReports() {
       employeeName: "Juan Pérez García",
       lastReportDate: "10/03/2026",
       payment: "1200.00",
-      initialBalance: 50000,
-      contributions: 5000,
-      withdrawals: 1000,
-      earnings: 2500,
-      finalBalance: 56500,
-      vestedRights: 45000,
+      initialBalance: "50,000.00",
+      contributions: "5,000.00",
+      withdrawals: "1,000.00",
+      earnings: "2,500.00",
+      finalBalance: "56,500.00",
+      vestedRights: "45,000.00",
     },
     {
       id: 2,
@@ -48,12 +48,12 @@ export default function FondoRetiroReports() {
       employeeName: "Juan Pérez García",
       lastReportDate: "10/02/2026",
       payment: "1200.00",
-      initialBalance: 75000,
-      contributions: 7500,
-      withdrawals: 0,
-      earnings: 3750,
-      finalBalance: 86250,
-      vestedRights: 68000,
+      initialBalance: "75,000.00",
+      contributions: "7,500.00",
+      withdrawals: "0.00",
+      earnings: "3,750.00",
+      finalBalance: "86,250.00",
+      vestedRights: "68,000.00",
     },
     {
       id: 3,
@@ -61,12 +61,12 @@ export default function FondoRetiroReports() {
       employeeName: "Juan Pérez García",
       lastReportDate: "10/01/2026",
       payment: "1200.00",
-      initialBalance: 60000,
-      contributions: 6000,
-      withdrawals: 500,
-      earnings: 3000,
-      finalBalance: 68500,
-      vestedRights: 55000,
+      initialBalance: "60,000.00",
+      contributions: "6,000.00",
+      withdrawals: "500.00",
+      earnings: "3,000.00",
+      finalBalance: "68,500.00",
+      vestedRights: "55,000.00",
     },
   ];
 
