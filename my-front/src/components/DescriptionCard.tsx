@@ -2,7 +2,7 @@ import React from "react";
 
 type DescriptionCardProps = {
   /** Encabezados */
-  lastReportDate: string; // "2026-02-10" o "10/02/2026" etc.
+  lastReportDate: string;
 
   /** Datos Generales */
   employeeKey: string;
@@ -20,7 +20,7 @@ type DescriptionCardProps = {
   onDownload?: () => void;
   downloadDisabled?: boolean;
 
-  /** Icono y estilos (se mantienen) */
+  /** Icono y estilos */
   icon: React.ElementType;
   iconColor?: string;
   iconBgColor?: string;
@@ -57,8 +57,8 @@ const DescriptionCardCard = ({
   return (
     <div
       className={`
-        flex flex-col p-5 rounded-2xl border-2 bg-white h-fit
-        transition-all duration-300 shadow-sm w-[350px]
+        flex flex-col p-6 rounded-2xl border-2 bg-white h-fit
+        transition-all duration-300 shadow-sm w-[420px]
         ${borderColor}
         select-none
       `}
@@ -67,22 +67,17 @@ const DescriptionCardCard = ({
       <div className="flex items-start justify-between w-full">
         <div className="flex items-center gap-4">
           <div className={`p-3 rounded-xl transition-all ${iconBgColor}`}>
-            <Icon className={`w-6 h-6 ${iconColor}`} />
+            <Icon className={`w-8 h-8 ${iconColor}`} />
           </div>
 
           <div className="flex flex-col">
-            {/* 1) Fondo de Ahorro para el Retiro */}
-            <h3 className="font-bold text-base text-gray-700">
+            <h3 className="font-bold text-xl text-gray-700">
               Fondo de Ahorro para el Retiro
             </h3>
-
-            {/* 2) Reporte de Movimientos */}
-            <p className="text-xs font-semibold text-gray-500">
+            <p className="text-base font-semibold text-gray-500">
               Reporte de Movimientos
             </p>
-
-            {/* 3) Fecha último reporte */}
-            <p className="text-[11px] text-gray-400">
+            <p className="text-sm text-gray-400">
               Último reporte cargado:{" "}
               <span className="font-semibold text-gray-500">
                 {lastReportDate}
@@ -92,29 +87,29 @@ const DescriptionCardCard = ({
         </div>
       </div>
 
-      {/* Contenido (siempre visible porque tus requerimientos no piden acordeón) */}
+      {/* Contenido */}
       <div className="mt-5 border-t border-gray-50 pt-5 flex flex-col gap-5">
         {/* Datos Generales */}
         <div>
-          <p className="text-[11px] font-black text-blue-500 uppercase tracking-widest mb-3">
+          <p className="text-sm font-black text-blue-500 uppercase tracking-widest mb-3">
             Datos Generales
           </p>
 
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <span className="text-[10px] font-bold text-gray-400 uppercase">
+              <span className="text-sm font-bold text-gray-400 uppercase">
                 Clave Empleado
               </span>
-              <span className="text-sm font-black text-gray-700">
+              <span className="text-lg font-black text-gray-700">
                 {employeeKey}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-[10px] font-bold text-gray-400 uppercase">
+              <span className="text-sm font-bold text-gray-400 uppercase">
                 Nombre Empleado
               </span>
-              <span className="text-sm font-black text-gray-700 text-right">
+              <span className="text-lg font-black text-gray-700 text-right">
                 {employeeName}
               </span>
             </div>
@@ -123,7 +118,7 @@ const DescriptionCardCard = ({
 
         {/* Resumen General */}
         <div>
-          <p className="text-[11px] font-black text-blue-500 uppercase tracking-widest mb-3">
+          <p className="text-sm font-black text-blue-500 uppercase tracking-widest mb-3">
             Resumen General
           </p>
 
@@ -141,7 +136,7 @@ const DescriptionCardCard = ({
         </div>
 
         {/* Información Santander */}
-        <p className="text-[11px] text-gray-400 leading-4">
+        <p className="text-sm text-gray-400 leading-5">
           Información proporcionada por Banco Santander (México), S.A.
           Institución de Banca Múltiple Grupo Financiero México.
         </p>
@@ -152,7 +147,7 @@ const DescriptionCardCard = ({
           disabled={downloadDisabled}
           onClick={onDownload}
           className={`
-            w-full py-2.5 rounded-xl font-bold text-sm transition
+            w-full py-3 rounded-xl font-bold text-lg transition
             ${downloadDisabled ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700"}
           `}
         >
@@ -166,10 +161,8 @@ const DescriptionCardCard = ({
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center w-full">
-      <span className="text-[10px] font-bold text-gray-400 uppercase">
-        {label}
-      </span>
-      <span className="text-sm font-black text-gray-700">{value}</span>
+      <span className="text-sm font-bold text-gray-400 uppercase">{label}</span>
+      <span className="text-lg font-black text-gray-700">{value}</span>
     </div>
   );
 }

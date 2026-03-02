@@ -9,6 +9,7 @@ type FondoRetiroData = {
   employeeKey: string;
   employeeName: string;
   lastReportDate: string;
+  payment: string;
   initialBalance: number;
   contributions: number;
   withdrawals: number;
@@ -33,6 +34,7 @@ export default function FondoRetiroReports() {
       employeeKey: "EMP001",
       employeeName: "Juan Pérez García",
       lastReportDate: "10/03/2026",
+      payment: "1200.00",
       initialBalance: 50000,
       contributions: 5000,
       withdrawals: 1000,
@@ -45,6 +47,7 @@ export default function FondoRetiroReports() {
       employeeKey: "EMP001",
       employeeName: "Juan Pérez García",
       lastReportDate: "10/02/2026",
+      payment: "1200.00",
       initialBalance: 75000,
       contributions: 7500,
       withdrawals: 0,
@@ -57,6 +60,7 @@ export default function FondoRetiroReports() {
       employeeKey: "EMP001",
       employeeName: "Juan Pérez García",
       lastReportDate: "10/01/2026",
+      payment: "1200.00",
       initialBalance: 60000,
       contributions: 6000,
       withdrawals: 500,
@@ -66,7 +70,15 @@ export default function FondoRetiroReports() {
     },
   ];
 
-  const headers = ["Clave", "Nombre", "Último Reporte", "Visualizar"];
+  const headers = [
+    "Clave",
+    "Nombre",
+    "Fecha de Aportación",
+    "Abonos",
+    "Retiros",
+    "Saldo de Ahorro",
+    "Visualizar",
+  ];
 
   const ANIM_MS = 700;
 
@@ -96,6 +108,11 @@ export default function FondoRetiroReports() {
     employeeName: <span className="text-gray-700">{item.employeeName}</span>,
     lastReportDate: (
       <span className="text-gray-500">{item.lastReportDate}</span>
+    ),
+    payment: <span className="text-gray-500">{item.earnings}</span>,
+    withdrawal: <span className="text-gray-500">{item.withdrawals}</span>,
+    finalBalance: (
+      <span className="text-gray-700 font-bold">{item.finalBalance}</span>
     ),
     view: (
       <button
