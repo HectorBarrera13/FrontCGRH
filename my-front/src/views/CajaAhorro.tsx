@@ -64,7 +64,15 @@ export default function CajaAhorro() {
     },
   ];
 
-  const headers = ["Clave", "Nombre", "Último Reporte", "Visualizar"];
+  const headers = [
+    "Clave",
+    "Nombre",
+    "Fecha de Aportación",
+    "Abonos",
+    "Retiros",
+    "Saldo de Ahorro",
+    "Visualizar",
+  ];
 
   const ANIM_MS = 700;
 
@@ -94,6 +102,11 @@ export default function CajaAhorro() {
     employeeName: <span className="text-gray-700">{item.employeeName}</span>,
     lastReportDate: (
       <span className="text-gray-500">{item.lastReportDate}</span>
+    ),
+    payment: <span className="text-gray-500">{item.earnings}</span>,
+    withdrawal: <span className="text-gray-500">{item.withdrawals}</span>,
+    finalBalance: (
+      <span className="text-gray-700 font-bold">{item.finalBalance}</span>
     ),
     view: (
       <button
@@ -153,8 +166,8 @@ export default function CajaAhorro() {
               withdrawals={renderItem.withdrawals}
               earnings={renderItem.earnings}
               finalBalance={renderItem.finalBalance}
-              vestedRights={renderItem.vestedRights}
               onDownload={handleDownload}
+              vestedRights={renderItem.vestedRights}
               icon={Wallet}
               iconColor="text-blue-600"
               iconBgColor="bg-blue-50"
