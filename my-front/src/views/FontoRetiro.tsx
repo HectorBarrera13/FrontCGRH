@@ -140,9 +140,9 @@ export default function FondoRetiroReports() {
     <div className="flex flex-col h-full">
       <PageTitle title="Movimientos Fondo de Ahorro para el Retiro" />
 
-      <div className="flex gap-6 flex-1 overflow-hidden">
-        {/* Tabla - Transición suave */}
-        <div className="transition-all duration-700 ease-out w-full">
+      <div className="flex flex-col lg:flex-row gap-6 flex-1 overflow-hidden">
+        {/* Tabla */}
+        <div className="transition-all duration-700 ease-out w-full min-w-0">
           <DynamicTable
             headers={headers}
             data={tableData}
@@ -154,15 +154,15 @@ export default function FondoRetiroReports() {
         {/* Card - Entrada/salida suave (sin desmontar de golpe) */}
         <div
           className={`
-            flex-shrink-0 overflow-hidden
-            transition-all duration-700 ease-out
-            transform-gpu will-change-transform
-            ${
-              isCardOpen
-                ? "opacity-100 translate-x-0 scale-100 max-w-[420px]"
-                : "opacity-0 translate-x-6 scale-95 max-w-0 pointer-events-none"
-            }
-          `}
+      shrink-0
+      transition-all duration-700 ease-out
+      transform-gpu will-change-transform
+      ${
+        isCardOpen
+          ? "opacity-100 lg:translate-x-0 translate-y-0 scale-100 lg:max-w-105"
+          : "opacity-0 lg:translate-x-6 translate-y-6 scale-95 lg:max-w-0 max-h-0 pointer-events-none"
+      }
+    `}
         >
           {renderItem && (
             <DescriptionCard

@@ -92,6 +92,7 @@ export default function SideBar({
                   <NavLink
                     key={label}
                     to={to}
+                    onClick={() => setIsOpen(false)}
                     className={({ isActive }) => `
                       p-2 transition-all duration-300 flex items-center rounded-md
                       ${

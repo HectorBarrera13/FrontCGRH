@@ -27,8 +27,10 @@ export default function MainContent({ children }: MainContentProps) {
         `}
       >
         {/* Scroll SOLO aquí */}
-        <div className="h-full overflow-y-auto">
-          <div className="mx-auto px-4 py-6 sm:px-6 lg:px-8">{children}</div>
+        <div className="h-full overflow-y-auto w-full">
+          <div className="mx-auto px-4 py-6 sm:px-6 lg:px-8 overflow-x-auto">
+            {children}
+          </div>
         </div>
       </section>
     </main>
