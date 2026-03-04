@@ -15,7 +15,6 @@ export default function MainContent({ children }: MainContentProps) {
       <SideBar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <TopBar isOpen={isSidebarOpen} />
 
-      {/* CONTENEDOR BLANCO REAL    ${isSidebarOpen ? "left-75" : "left-16"}*/}
       <section
         className={`
           fixed
@@ -23,7 +22,8 @@ export default function MainContent({ children }: MainContentProps) {
           bottom-0
           right-0
           transition-all duration-300
-          left-16
+          left-0 
+          md:left-16
         `}
       >
         {/* Scroll SOLO aquí */}

@@ -15,7 +15,7 @@ const DynamicTable: React.FC<TableProps> = ({
 }) => {
   return (
     <div className="flex flex-col items-center justify-start">
-      <div className="w-[90%]  rounded-lg border border-gray-200 shadow-sm mb-4 bg-white">
+      <div className="w-[90%] rounded-lg border border-gray-200 shadow-sm mb-4 bg-white overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-600 border-collapse">
           <thead className=" bg-gray-50">
             <tr>
