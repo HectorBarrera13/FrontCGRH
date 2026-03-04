@@ -57,11 +57,11 @@ const DescriptionCardCard = ({
   return (
     <div
       className={`
-        flex flex-col p-6 rounded-2xl border-2 bg-white h-fit
-        transition-all duration-300 shadow-sm w-[420px]
-        ${borderColor}
-        select-none
-      `}
+  flex flex-col p-6 rounded-2xl border-2 bg-white h-fit
+  transition-all duration-300 shadow-sm w-full lg:w-[420px]
+  ${borderColor}
+  select-none
+`}
     >
       {/* Encabezado */}
       <div className="flex items-start justify-between w-full">
